@@ -4,6 +4,7 @@ import base64
 import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+pip install requests beautifulsoup4
 
 # 目标频道
 TARGET_URL = "https://t.me/s/wxdy666"
