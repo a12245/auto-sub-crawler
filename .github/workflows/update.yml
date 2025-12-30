@@ -2,10 +2,8 @@ name: Auto Scrape & Merge
 
 on:
   schedule:
-    # 每 4 小时运行一次 (UTC 时间)
     - cron: '0 */4 * * *'
   workflow_dispatch:
-    # 允许手动点击按钮触发
 
 permissions:
   contents: write
@@ -23,10 +21,11 @@ jobs:
       with:
         python-version: '3.9'
 
+    # 关键：在这里安装库，而不是在 Python 代码里
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests
+        pip install requests beautifulsoup4
 
     - name: Run Scraper
       run: python main.py
@@ -36,5 +35,4 @@ jobs:
         git config --global user.name "GitHub Action"
         git config --global user.email "action@github.com"
         git add subscribed_nodes.txt
-        # 只有当文件发生变化时才提交
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update subscription [$(date)]" && git push)
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update subscription" && git push)
