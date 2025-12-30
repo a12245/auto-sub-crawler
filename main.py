@@ -2,6 +2,7 @@ import requests
 import re
 import base64
 import datetime
+import requirements.txt
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 pip install requests beautifulsoup4
