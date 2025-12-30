@@ -110,4 +110,24 @@ def process_links(urls):
 
 def main():
     candidate_urls = fetch_and_parse_channel()
-    if not c
+    if not candidate_urls:
+        print("[-] No URLs found in today/yesterday messages.")
+        return
+
+    nodes = process_links(candidate_urls)
+    nodes = list(set(nodes))
+    nodes = [n for n in nodes if n and '://' in n]
+    
+    print(f"[*] Total valid nodes extracted: {len(nodes)}")
+    
+    if nodes:
+        final_str = "\n".join(nodes)
+        final_b64 = base64.b64encode(final_str.encode('utf-8')).decode('utf-8')
+        with open("subscribed_nodes.txt", "w", encoding="utf-8") as f:
+            f.write(final_b64)
+        print("[+] Success! 'subscribed_nodes.txt' generated.")
+    else:
+        print("[-] No valid nodes merged.")
+
+if __name__ == "__main__":
+    main()
